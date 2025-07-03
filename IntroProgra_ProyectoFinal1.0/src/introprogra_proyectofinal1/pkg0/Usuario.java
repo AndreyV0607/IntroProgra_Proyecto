@@ -14,6 +14,10 @@ public class Usuario {
     private String nombre;
     private boolean activo;
 
+    public Usuario() {
+    }
+    
+
     public Usuario(int id, String nombre, boolean activo) {
         this.id = id;
         this.nombre = nombre;

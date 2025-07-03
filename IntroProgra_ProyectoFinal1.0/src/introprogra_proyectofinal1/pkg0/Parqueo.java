@@ -59,7 +59,7 @@ public class Parqueo {
     }
 }
     //Con esto se reserva un campo 
-    public void asignarEapacio(String nivel, int fila, int columna) {
+    public void asignarEspacio(String nivel, int fila, int columna) {
         String[][] matriz = escogerNivel(nivel);
         if (matriz[fila][columna].equals("L")) {
             matriz[fila][columna] = "O";
