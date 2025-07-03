@@ -31,7 +31,7 @@ public class Parqueo {
         };
         g2 = new String[][]{
             {"O","O","L","L","O"},
-            {"L","E,","L","L","L"},
+            {"L","E","L","L","L"},
             {"L","O","L","L","L"},
             {"L","L","L","L","O"},
             {"D","D","D","O","O"}
@@ -47,7 +47,7 @@ public class Parqueo {
        
     }
     
-    private String[][] escogerNivel(String nivel){
+    private String[][] escogerNivelParqueo(String nivel){
     switch (nivel.toUpperCase()) {
         case "G1": return g1;
         case "G2": return g2;
@@ -58,25 +58,50 @@ public class Parqueo {
             return null;
     }
 }
+    //Lógica para validar que el espacio ingresado sea correcto
+    private boolean validarPosicion(String[][] matriz, int fila, int columna) {
+    return fila >= 0 && fila < matriz.length && columna >= 0 && columna < matriz[0].length;
+}
+    
+    
     //Con esto se reserva un campo 
-    public void asignarEspacio(String nivel, int fila, int columna) {
-        String[][] matriz = escogerNivel(nivel);
-        if (matriz[fila][columna].equals("L")) {
+    public void asignarEspacioParqueo(String nivel, int fila, int columna) {
+        String[][] matriz = escogerNivelParqueo(nivel);
+        if (matriz != null && validarPosicion(matriz, fila, columna)) {
+            
+            if (matriz[fila][columna].equals("L")) {
             matriz[fila][columna] = "O";
             JOptionPane.showMessageDialog(null, "Se ha reservado el espacio con exito");
-        } else {
+            
+            } else {
             JOptionPane.showMessageDialog(null, "El espacio seleccionado ya esta ocupado");
+
+            }
+            
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Posición inválida");
+        }
+
+        
+
+    }
+    
+    //Con este se libera un campo ocupado
+    public void liberarEspacioParqueo(String nivel, int fila, int columna){
+        String[][] matriz = escogerNivelParqueo(nivel);
+        if (matriz != null && validarPosicion(matriz, fila, columna)) {
             
         }
-    }
-    //Con este se libera un campo ocupado
-    public void liberarEspacio(String nivel, int fila, int columna){
-        String[][] matriz = escogerNivel(nivel);
         if(matriz[fila][columna].equals("O")){
             matriz[fila][columna] = "L";
             JOptionPane.showMessageDialog(null, "El espacio fue libreado");
         }
     }
+    
+    
+    
+
     
 }
     

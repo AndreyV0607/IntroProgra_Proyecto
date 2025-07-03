@@ -17,7 +17,7 @@ public class SalaPesas {
     private int acumulador = 0;
     
     //Se van guardando los registros de usuarios al arreglo hasta llenar el aforo
-    public boolean ingresar(int usuarioID){
+    public boolean ingresarPesas(int usuarioID){
         if(acumulador<capacidad){
             usuariosRegistrados[acumulador] = usuarioID;
             acumulador++;
@@ -27,7 +27,7 @@ public class SalaPesas {
         JOptionPane.showMessageDialog(null, "La sala de pesas esta a máxima capacidad");
         return false;
     }
-    public void salir(int usuarioID){
+    public void salirPesas(int usuarioID){
         for (int i = 0; i < acumulador; i++) {
             if (usuariosRegistrados[i] == usuarioID) {
                     // Desplazar para no dejar huecos
@@ -40,7 +40,7 @@ public class SalaPesas {
         }
     }
     
-    public void mostrarPresentes() {
+    public void mostrarPresentesPesas() {
         if (acumulador == 0) {
             JOptionPane.showMessageDialog(null, "No hay socios en la sala.");
         } else {
