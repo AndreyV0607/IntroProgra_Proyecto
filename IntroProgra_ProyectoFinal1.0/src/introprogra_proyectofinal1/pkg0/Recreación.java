@@ -14,7 +14,7 @@ public class Recreacion {
     private int maxReservas = 100;
     private int cantidadTurnosMesas = 16; 
 
-    // --- Atributos de la Clase ---
+    // Atributos 
     private EspacioRecreativo[] espacios;
     private Reserva[] reservas;
     private String[][] matrizHorariosMesas; 
