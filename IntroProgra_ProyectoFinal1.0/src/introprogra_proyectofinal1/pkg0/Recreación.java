@@ -4,13 +4,17 @@
  */
 package introprogra_proyectofinal1.pkg0;
 
+/**
+ *
+ * @author andreyvargassolis
+ */
 public class Recreacion {
+    
+    private int maxEspacios = 10;
+    private int maxReservas = 100;
+    private int cantidadTurnosMesas = 16; 
 
     // --- Atributos de la Clase ---
-    private static final int MAX_ESPACIOS = 10;
-    private static final int MAX_RESERVAS = 100;
-    private static final int CANTIDAD_TURNOS_MESAS = 16; 
-
     private EspacioRecreativo[] espacios;
     private Reserva[] reservas;
     private String[][] matrizHorariosMesas; 
@@ -21,17 +25,4 @@ public class Recreacion {
 
     private Usuario[] listaGeneralDeUsuarios;
     private int cantidadTotalUsuarios;
-
-    /**
-     * Constructor que inicia el apartado de Recreación.
-     * @param usuarios El arreglo de usuarios de todo el sistema.
-     * @param cantidad La cantidad actual de usuarios en el arreglo.
-     */
-
-/**
- *
- * @author andreyvargassolis
- */
-public class Recreación {
-    
 }
