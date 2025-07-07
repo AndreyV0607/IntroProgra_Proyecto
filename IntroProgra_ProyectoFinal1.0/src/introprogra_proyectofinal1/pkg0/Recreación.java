@@ -8,21 +8,6 @@ package introprogra_proyectofinal1.pkg0;
  *
  * @author andreyvargassolis
  */
-public class Recreacion {
+public class Recreación {
     
-    private int maxEspacios = 10;
-    private int maxReservas = 100;
-    private int cantidadTurnosMesas = 16; 
-
-    // Atributos 
-    private EspacioRecreativo[] espacios;
-    private Reserva[] reservas;
-    private String[][] matrizHorariosMesas; 
-    private String[] etiquetasTurnos;
-
-    private int numEspacios;
-    private int numReservas;
-
-    private Usuario[] listaGeneralDeUsuarios;
-    private int cantidadTotalUsuarios;
 }
