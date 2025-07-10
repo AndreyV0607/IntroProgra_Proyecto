@@ -6,50 +6,74 @@ package introprogra_proyectofinal1.pkg0;
 
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author andreyvargassolis
- */
 public class SalaPesas {
     
-    private int capacidad =50;
-    private int[] usuariosRegistrados = new int[capacidad];
-    private int acumulador = 0;
-    
-    //Se van guardando los registros de usuarios al arreglo hasta llenar el aforo
-    public boolean ingresarPesas(int usuarioID){
-        if(acumulador<capacidad){
-            usuariosRegistrados[acumulador] = usuarioID;
-            acumulador++;
-            JOptionPane.showMessageDialog(null, "Se le ha asignado un espacio al usuario"+ usuarioID + "con extio");
-            return true;
-        }  
-        JOptionPane.showMessageDialog(null, "La sala de pesas esta a máxima capacidad");
-        return false;
+    //atributos
+    private final String[] horarios = {"6:00 AM", "9:00 AM", "12:00 PM", "3:00 PM", "6:00 PM", "9:00 PM"};
+    private final int[][] idsPorHorario = new int[6][50];  // hasta 50 personas por horario
+    private final int[] contadorPorHorario = new int[6];   // lleva el conteo por horario
+
+    public void ingresarSalaPesas(int id) {
+        String menu = "Seleccione horario:\n";
+        for (int i = 0; i < horarios.length; i++) {
+            menu += (i + 1) + ". " + horarios[i] + " (ocupados: " + contadorPorHorario[i] + "/50)\n (Utilice del 1 al 6 para elegir su horario)\n";
+        }
+
+        String input = JOptionPane.showInputDialog(menu);
+        if (input == null) return; // Cancelado
+
+        int opcion = Integer.parseInt(input) - 1;
+
+        if (opcion < 0 || opcion >= horarios.length) {
+            JOptionPane.showMessageDialog(null, "Horario inválido.");
+            return;
+        }
+
+        if (contadorPorHorario[opcion] >= 50) {
+            JOptionPane.showMessageDialog(null, "Ese horario ya está lleno.");
+            return;
+        }
+
+        for (int i = 0; i < contadorPorHorario[opcion]; i++) {
+            if (idsPorHorario[opcion][i] == id) {
+                JOptionPane.showMessageDialog(null, "Ya estás inscrito en ese horario.");
+                return;
+            }
+        }
+
+        idsPorHorario[opcion][contadorPorHorario[opcion]] = id;
+        contadorPorHorario[opcion]++;
+        JOptionPane.showMessageDialog(null, "Reserva exitosa para las " + horarios[opcion]);
     }
-    public void salirPesas(int usuarioID){
-        for (int i = 0; i < acumulador; i++) {
-            if (usuariosRegistrados[i] == usuarioID) {
-                    // Desplazar para no dejar huecos
-                    for (int j = i; j < acumulador - 1; j++) {
-                        usuariosRegistrados[j] = usuariosRegistrados[j + 1];
+
+    public void salirSalaPesas(int id) {
+        boolean encontrado = false;
+        for (int h = 0; h < horarios.length; h++) {
+            for (int i = 0; i < contadorPorHorario[h]; i++) {
+                if (idsPorHorario[h][i] == id) {
+                    for (int j = i; j < contadorPorHorario[h] - 1; j++) {
+                        idsPorHorario[h][j] = idsPorHorario[h][j + 1];
                     }
-                    acumulador--; // Disminuye cantidad
+                    contadorPorHorario[h]--;
+                    JOptionPane.showMessageDialog(null, "Usuario con ID " + id + " ha salido del horario " + horarios[h]);
+                    encontrado = true;
                     break;
+                }
             }
+        }
+        if (!encontrado) {
+            JOptionPane.showMessageDialog(null, "El ID " + id + " no está registrado en ningún horario.");
         }
     }
-    
-    public void mostrarPresentesPesas() {
-        if (acumulador == 0) {
-            JOptionPane.showMessageDialog(null, "No hay socios en la sala.");
-        } else {
-            String mensaje = "Socios actualmente en la sala:\n";
-            for (int i = 0; i < acumulador; i++) {
-                mensaje += "- ID: " + usuariosRegistrados[i] + "\n";
+
+    public void mostrarPresentesSalaPesas() {
+        StringBuilder mensaje = new StringBuilder("Usuarios por horario:\n");
+        for (int h = 0; h < horarios.length; h++) {
+            mensaje.append(horarios[h]).append(" (").append(contadorPorHorario[h]).append("):\n");
+            for (int i = 0; i < contadorPorHorario[h]; i++) {
+                mensaje.append("  - ID: ").append(idsPorHorario[h][i]).append("\n");
             }
-            JOptionPane.showMessageDialog(null, mensaje);
         }
+        JOptionPane.showMessageDialog(null, mensaje.toString());
     }
 }
-
