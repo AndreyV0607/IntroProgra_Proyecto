@@ -43,6 +43,7 @@ public class Recreacion {
             JOptionPane.showMessageDialog(null, " No hay suficiente espacio en la cancha de basquet.");
         }
     }
+    /*
  public void liberarBaloncesto(int cantidadJugadores) {
         // Verifica que no se liberen más jugadores de los que hay
         if ((this.jugadoresBasquetbol - cantidadJugadores) >= 0) {
@@ -55,7 +56,8 @@ public class Recreacion {
             JOptionPane.showMessageDialog(null, "Error: No se pueden liberar más jugadores de los que existen. La cancha ha sido vaciada.");
         }
     }
+    */
 }
 
     
-}
+
