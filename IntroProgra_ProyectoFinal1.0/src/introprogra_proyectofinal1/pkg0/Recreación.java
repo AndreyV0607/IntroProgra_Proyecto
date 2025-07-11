@@ -27,11 +27,11 @@ public class Recreacion {
     public Recreacion() {
         this.jugadoresFutbol1 = 0;
         this.jugadoresFutbol2 = 0;
-        this.jugadoresBasquetbol = 0; // Se usa tu variable
+        this.jugadoresBasquetbol = 0; 
         this.jugadoresTenis1 = 0;
         this.jugadoresTenis2 = 0;
     }
-//  Métodos de Baloncesto 
+//  Métodos de Basquet
     public void reservarBaloncesto(int cantidadJugadores) {
         // Verifica si la suma de los jugadores actuales y los nuevos se pasa del maximo
         if ((this.jugadoresBasquetbol + cantidadJugadores) <= this.max_Basquetbol) {
