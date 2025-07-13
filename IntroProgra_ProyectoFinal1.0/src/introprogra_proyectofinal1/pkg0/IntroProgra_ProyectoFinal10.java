@@ -38,8 +38,10 @@ public class IntroProgra_ProyectoFinal10 {
 
         // Mostrar presentes de nuevo
         sala.mostrarPresentes();*/
-        /*SalaPesas sala = new SalaPesas();
-
+        
+        
+        SalaPesas sala = new SalaPesas();
+        Cabina cabinas = new Cabina();
         Usuario usuario1 = new Usuario(101, "Mateo", true);
         Usuario usuario2 = new Usuario(102, "Valeria", true);
 
@@ -53,6 +55,7 @@ public class IntroProgra_ProyectoFinal10 {
                     "3. Salir usuario 1\n" +
                     "4. Salir usuario 2\n" +
                     "5. Ver presentes\n" +
+                    "7: Gestionar Cabinas\n" +
                     "6. Salir del sistema"
             );
 
@@ -90,20 +93,20 @@ public class IntroProgra_ProyectoFinal10 {
                 case "6":
                     salirSalaPesas = true;
                     break;
+                    
+                case "7":
+                    cabinas.menuCabinas();
+                    break;
+                    
+                case "8":
+                    salirSalaPesas = true;
+                    break;
 
                 default:
                     JOptionPane.showMessageDialog(null, "Opción inválida.");
             }
-        }*/
-        
-    
-        new SalaPesas().iniciarSalaPesas();
+        }
     }
 }
-
-    
-    
-
-
 
 
