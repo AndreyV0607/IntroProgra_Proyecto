@@ -4,23 +4,89 @@
  */
 package introprogra_proyectofinal1.pkg0;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 public class SalaPesas {
-    
-    //atributos
     private final String[] horarios = {"6:00 AM", "9:00 AM", "12:00 PM", "3:00 PM", "6:00 PM", "9:00 PM"};
-    private final int[][] idsPorHorario = new int[6][50];  // hasta 50 personas por horario
-    private final int[] contadorPorHorario = new int[6];   // lleva el conteo por horario
+    private final int[][] idsPorHorario = new int[6][50];
+    private final int[] contadorPorHorario = new int[6];
+
+    public void iniciarSalaPesas() {
+        boolean salir = false;
+
+        while (!salir) {
+            String opcion = JOptionPane.showInputDialog(
+                "Sala de Pesas - Menú\n" +
+                "1. Ingresar a un horario\n" +
+                "2. Salir de un horario\n" +
+                "3. Ver presentes\n" +
+                "4. Salir al menú"
+            );
+
+            if (opcion == null) break;
+
+            switch (opcion) {
+                case "1":
+                    Usuario uIn = seleccionarUsuarioSalaPesas();
+                    if (uIn != null && uIn.isActivo()) {
+                        ingresarSalaPesas(uIn.getId());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Usuario inválido o inactivo.");
+                    }
+                    break;
+
+                case "2":
+                    Usuario uOut = seleccionarUsuarioSalaPesas();
+                    if (uOut != null) {
+                        salirSalaPesas(uOut.getId());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Usuario no encontrado.");
+                    }
+                    break;
+
+                case "3":
+                    mostrarPresentesSalaPesas();
+                    break;
+
+                case "4":
+                    salir = true;
+                    break;
+
+                default:
+                    JOptionPane.showMessageDialog(null, "Opción inválida.");
+            }
+        }
+    }
+
+    private Usuario seleccionarUsuarioSalaPesas() {
+        /*StringBuilder lista = new StringBuilder("Usuarios activos:\n");
+        for (Usuario u : Usuario.listaUsuarios) {
+            if (u.isActivo()) {
+                lista.append(u.getId()).append(" - ").append(u.getNombre()).append("\n");
+            }
+        }*/
+        String ingreso = JOptionPane.showInputDialog("\nIngrese el ID del usuario:");
+        if (ingreso == null) return null;
+
+        try {
+            int id = Integer.parseInt(ingreso);
+            //usa la funcion buscarid dentro de usuario para verificar exista el usuario
+            return Usuario.buscarPorId(id);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "ID inválido.");
+            return null;
+        }
+    }
 
     public void ingresarSalaPesas(int id) {
-        String menu = "Seleccione horario:\n";
+        StringBuilder menu = new StringBuilder("Seleccione horario:\n");
         for (int i = 0; i < horarios.length; i++) {
-            menu += (i + 1) + ". " + horarios[i] + " (ocupados: " + contadorPorHorario[i] + "/50)\n (Utilice del 1 al 6 para elegir su horario)\n";
+            menu.append(i + 1).append(". ").append(horarios[i])
+                 .append(" (").append(contadorPorHorario[i]).append("/50)\n");
         }
 
-        String input = JOptionPane.showInputDialog(menu);
-        if (input == null) return; // Cancelado
+        String input = JOptionPane.showInputDialog(menu.toString());
+        if (input == null) return;
 
         int opcion = Integer.parseInt(input) - 1;
 
@@ -71,7 +137,11 @@ public class SalaPesas {
         for (int h = 0; h < horarios.length; h++) {
             mensaje.append(horarios[h]).append(" (").append(contadorPorHorario[h]).append("):\n");
             for (int i = 0; i < contadorPorHorario[h]; i++) {
-                mensaje.append("  - ID: ").append(idsPorHorario[h][i]).append("\n");
+                int id = idsPorHorario[h][i];
+                Usuario u = Usuario.buscarPorId(id);
+                mensaje.append("  - ").append(id);
+                if (u != null) mensaje.append(" - ").append(u.getNombre());
+                mensaje.append("\n");
             }
         }
         JOptionPane.showMessageDialog(null, mensaje.toString());

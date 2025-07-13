@@ -38,7 +38,7 @@ public class IntroProgra_ProyectoFinal10 {
 
         // Mostrar presentes de nuevo
         sala.mostrarPresentes();*/
-        SalaPesas sala = new SalaPesas();
+        /*SalaPesas sala = new SalaPesas();
 
         Usuario usuario1 = new Usuario(101, "Mateo", true);
         Usuario usuario2 = new Usuario(102, "Valeria", true);
@@ -94,8 +94,16 @@ public class IntroProgra_ProyectoFinal10 {
                 default:
                     JOptionPane.showMessageDialog(null, "Opción inválida.");
             }
-        }
+        }*/
+        
+    
+        new SalaPesas().iniciarSalaPesas();
     }
 }
+
+    
+    
+
+
 
 

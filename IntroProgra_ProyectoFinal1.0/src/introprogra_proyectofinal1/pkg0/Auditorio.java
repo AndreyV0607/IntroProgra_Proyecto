@@ -10,4 +10,6 @@ package introprogra_proyectofinal1.pkg0;
  */
 public class Auditorio {
     
+    
+    
 }
