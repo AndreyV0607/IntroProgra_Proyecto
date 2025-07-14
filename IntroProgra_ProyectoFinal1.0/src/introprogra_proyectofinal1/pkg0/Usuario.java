@@ -21,7 +21,7 @@ public class Usuario {
     static {
         listaUsuarios.add(new Usuario(101, "Mateo", true));
         listaUsuarios.add(new Usuario(102, "Valeria", true));
-        listaUsuarios.add(new Usuario(103, "Andrey", true));
+        listaUsuarios.add(new Usuario(103, "Andres", true));
         listaUsuarios.add(new Usuario(104, "Sofía", true));
         listaUsuarios.add(new Usuario(105, "Carlos", true));
         listaUsuarios.add(new Usuario(106, "Carmonis", true));
@@ -32,7 +32,7 @@ public class Usuario {
         listaUsuarios.add(new Usuario(111, "José", true));
         listaUsuarios.add(new Usuario(112, "Lucía", true));
         listaUsuarios.add(new Usuario(113, "Daniel", true));
-        listaUsuarios.add(new Usuario(114, "Camila", true));
+        listaUsuarios.add(new Usuario(114, "Camilo", true));
         listaUsuarios.add(new Usuario(115, "David", true));
         listaUsuarios.add(new Usuario(116, "Laura", true));
         listaUsuarios.add(new Usuario(117, "Pedro", true));
