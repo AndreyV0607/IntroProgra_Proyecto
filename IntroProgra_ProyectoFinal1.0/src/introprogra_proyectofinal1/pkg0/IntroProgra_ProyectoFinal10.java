@@ -16,9 +16,9 @@ public class IntroProgra_ProyectoFinal10 {
      * @param args the command line arguments
      */
     
-    public static void main(String[] args) {
-        
-        new SalaPesas().iniciarSalaPesas();
+    public static void main(String[] args) {  
+        //new SalaPesas().iniciarSalaPesas();
+        //new Recreacion().iniciarRecreacion();
     }
 }
 

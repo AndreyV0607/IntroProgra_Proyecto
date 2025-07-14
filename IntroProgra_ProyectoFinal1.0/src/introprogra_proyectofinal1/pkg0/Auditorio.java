@@ -42,7 +42,7 @@ public class Auditorio {
 
             switch (opcion) {
                 case "1" -> mostrarCharlas();
-                case "2" -> inscribirParticipante();
+                case "2" -> inscribirParticipanteAuditorio();
                 case "3" -> modificarNombreCharla(); 
                 case "4" -> salir = true;
                 default -> JOptionPane.showMessageDialog(null, "Opción inválida.");
@@ -62,7 +62,7 @@ public class Auditorio {
     }
 
     // inscripcion de la charla
-    private static void inscribirParticipante() {
+    private static void inscribirParticipanteAuditorio() {
         String idParticipante = JOptionPane.showInputDialog("Ingrese su ID de participante:");
 
         String opciones = "Seleccione la charla:\n";
