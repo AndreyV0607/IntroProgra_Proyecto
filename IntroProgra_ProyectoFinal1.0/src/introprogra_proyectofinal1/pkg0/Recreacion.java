@@ -53,32 +53,73 @@ public class Recreacion {
             if (opcion == null) break;
 
             switch (opcion) {
-                case "1" -> reservarFutbol();
-                case "2" -> reservarBaloncesto();
-                case "3" -> reservarTenis();
-                case "4" -> liberarCancha();
-                case "5" -> mostrarEstadoRecreacion();
-                case "6" -> salir = true;
-                default -> JOptionPane.showMessageDialog(null, "Opción inválida.");
+                case "1": 
+                    // Selección e ingreso a un horario
+                    Usuario uInF = seleccionarUsuarioRecreacion();
+                    if (uInF != null && uInF.isActivo()) {
+                        reservarFutbol(uInF.getId());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Usuario inválido o inactivo.");
+                    }
+                    break;
+                    
+                case "2": 
+                    Usuario uInB = seleccionarUsuarioRecreacion();
+                    if (uInB != null && uInB.isActivo()) {
+                        reservarBaloncesto(uInB.getId());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Usuario inválido o inactivo.");
+                    }
+                    break;
+                    
+                    
+                case "3": 
+                    Usuario uInT = seleccionarUsuarioRecreacion();
+                    if (uInT != null && uInT.isActivo()) {
+                        reservarTenis(uInT.getId());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Usuario inválido o inactivo.");
+                    }
+                    break;
+                   
+                    
+                case "4": 
+                    Usuario uOut = seleccionarUsuarioRecreacion();
+                    if (uOut != null) {
+                        liberarCancha(uOut.getId());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Usuario no encontrado.");
+                    }
+                    break;
+                    
+                    
+                case "5": 
+                    mostrarEstadoRecreacion();
+                    
+                case "6": 
+                    salir = true;
+                default: 
+                    JOptionPane.showMessageDialog(null, "Opción inválida.");
             }
         }
     }
     private Usuario seleccionarUsuarioRecreacion() {
+        
+        String input = JOptionPane.showInputDialog( "\nIngrese el ID del usuario:");
+        if (input == null) return null;
 
-    String input = JOptionPane.showInputDialog("\nIngrese el ID del usuario:");
-    if (input == null) return null;
-
-    try {
-        int id = Integer.parseInt(input);
-        return Usuario.buscarPorId(id);
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "ID inválido.");
-        return null;
+        try {
+            int id = Integer.parseInt(input);
+            return Usuario.buscarPorId(id); // Devuelve el objeto Usuario si existe
+        } catch (NumberFormatException e) { // Obtiene los ids que no fueron registrados(Investigado por cuenta propia)
+            //Cuando obtiene un valor que va a dar error, evita que se cierre el programa, manejando los errores ingresados por el usuario
+            JOptionPane.showMessageDialog(null, "ID inválido.");
+            return null;
+        }
     }
-}
 
     // Reserva fútbol, se escoge cancha 1 o 2
-    private void reservarFutbol() {
+    private void reservarFutbol(int id) {
     Usuario u = seleccionarUsuarioRecreacion();
     if (u == null || !u.isActivo()) {
         JOptionPane.showMessageDialog(null, "Usuario no válido o inactivo.");
@@ -109,7 +150,7 @@ public class Recreacion {
 
 
     // Reserva baloncesto
-    private void reservarBaloncesto() {
+    private void reservarBaloncesto(int id) {
     Usuario u = seleccionarUsuarioRecreacion();
     if (u == null || !u.isActivo()) {
         JOptionPane.showMessageDialog(null, "Usuario no válido o inactivo.");
@@ -128,7 +169,7 @@ public class Recreacion {
 
 
     // Reserva tenis, se escoge cancha 1 o 2
-    private void reservarTenis() {
+    private void reservarTenis(int id) {
     Usuario u = seleccionarUsuarioRecreacion();
     if (u == null || !u.isActivo()) {
         JOptionPane.showMessageDialog(null, "Usuario no válido o inactivo.");
@@ -159,7 +200,7 @@ public class Recreacion {
 
 
     // Libera jugadores de una cancha seleccionada
-    private void liberarCancha() {
+    private void liberarCancha(int id) {
         String tipo = JOptionPane.showInputDialog("""
             ¿Qué cancha desea liberar?
             1. Fútbol 1

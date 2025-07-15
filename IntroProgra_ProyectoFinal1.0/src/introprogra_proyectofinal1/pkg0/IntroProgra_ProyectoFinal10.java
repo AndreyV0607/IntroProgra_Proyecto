@@ -19,6 +19,10 @@ public class IntroProgra_ProyectoFinal10 {
     public static void main(String[] args) {  
         //new SalaPesas().iniciarSalaPesas();
         //new Recreacion().iniciarRecreacion();
+        //new Auditorio().menuAuditorio();
+        //new Cabina().menuCabinas();
+        //new ClasesGrupales().menuClasesGrupales();
+        //new Parqueo().iniciarParqueo();
     }
 }
 

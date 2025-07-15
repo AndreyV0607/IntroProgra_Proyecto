@@ -21,12 +21,13 @@ public class Auditorio {
     // Matriz para inscripciones: [horario][posición en la lista de 30]
     static String[][] inscripciones = new String[2][30];
 
-    /* Método principal
-    public static void main(String[] args) {
-        gestionarAuditorio(); // Inicia el menú del auditorio
-    }
-*/
-    public static void gestionarAuditorio() {
+    //Llama al menu del auditorio
+     public void menuAuditorio(){
+         gestionarAuditorio(); // Inicia el menú del auditorio
+     }
+     
+    
+    public void gestionarAuditorio() {
         boolean salir = false;
 
         while (!salir) {
@@ -41,12 +42,45 @@ public class Auditorio {
             if (opcion == null) break;
 
             switch (opcion) {
-                case "1" -> mostrarCharlas();
-                case "2" -> inscribirParticipanteAuditorio();
-                case "3" -> modificarNombreCharla(); 
-                case "4" -> salir = true;
-                default -> JOptionPane.showMessageDialog(null, "Opción inválida.");
+                case "1":
+                    mostrarCharlas();
+                    break;
+
+                case "2":
+                    Usuario uInA = seleccionarUsuarioAuditorio();
+                    if (uInA != null && uInA.isActivo()) {
+                        inscribirParticipanteAuditorio(uInA.getId());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Usuario inválido o inactivo.");
+                    }
+                    break;
+
+                case "3":
+                    modificarNombreCharla();
+                    break;
+
+                case "4":
+                    salir = true;
+                    break;
+
+                default:
+                    JOptionPane.showMessageDialog(null, "Opción inválida.");
             }
+
+        }
+    }
+    private Usuario seleccionarUsuarioAuditorio() {
+        
+        String input = JOptionPane.showInputDialog( "\nIngrese el ID del usuario:");
+        if (input == null) return null;
+
+        try {
+            int id = Integer.parseInt(input);
+            return Usuario.buscarPorId(id); // Devuelve el objeto Usuario si existe
+        } catch (NumberFormatException e) { // Obtiene los ids que no fueron registrados(Investigado por cuenta propia)
+            //Cuando obtiene un valor que va a dar error, evita que se cierre el programa, manejando los errores ingresados por el usuario
+            JOptionPane.showMessageDialog(null, "ID inválido.");
+            return null;
         }
     }
 
@@ -62,8 +96,8 @@ public class Auditorio {
     }
 
     // inscripcion de la charla
-    private static void inscribirParticipanteAuditorio() {
-        String idParticipante = JOptionPane.showInputDialog("Ingrese su ID de participante:");
+    private static void inscribirParticipanteAuditorio(int id) {
+        String idParticipante = String.valueOf(id);//JOptionPane.showInputDialog("Ingrese su ID de participante:");
 
         String opciones = "Seleccione la charla:\n";
         for (int i = 0; i < horarios.length; i++) {
