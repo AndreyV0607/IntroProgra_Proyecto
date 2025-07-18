@@ -26,10 +26,12 @@ public class Auditorio {
          gestionarAuditorio(); // Inicia el menú del auditorio
      }
      
-    
+    //Abre el menú del auditorio para ver sus opciones y llamar la deseada
     public void gestionarAuditorio() {
         boolean salir = false;
 
+        
+        //Ciclo while que lo mantiene en este menú hasta decirdir salir
         while (!salir) {
             String opcion = JOptionPane.showInputDialog("""
                     Auditorio Fitness - Selecciona una opción:
@@ -39,8 +41,12 @@ public class Auditorio {
                     4. Salir
                     """);
 
+            
+            //detecta si el usuario canceló el cuadro de diálogo y termina el ciclo while para salir del menú.
             if (opcion == null) break;
 
+            
+            //opciones del menu
             switch (opcion) {
                 case "1":
                     mostrarCharlas();
@@ -72,12 +78,15 @@ public class Auditorio {
     private Usuario seleccionarUsuarioAuditorio() {
         
         String input = JOptionPane.showInputDialog( "\nIngrese el ID del usuario:");
+        
+        //detecta si el usuario canceló el cuadro de diálogo y termina el ciclo while para salir del menú.
         if (input == null) return null;
 
+        
         try {
             int id = Integer.parseInt(input);
             return Usuario.buscarPorId(id); // Devuelve el objeto Usuario si existe
-        } catch (NumberFormatException e) { // Obtiene los ids que no fueron registrados(Investigado por cuenta propia)
+        } catch (NumberFormatException e) { // Obtiene los ids que no fueron registrados(Investigado por cuenta propia el código)
             //Cuando obtiene un valor que va a dar error, evita que se cierre el programa, manejando los errores ingresados por el usuario
             JOptionPane.showMessageDialog(null, "ID inválido.");
             return null;
@@ -88,6 +97,8 @@ public class Auditorio {
     // Despliegue de informacion de los horarios
     private static void mostrarCharlas() {
         String mensaje = "Charlas disponibles en el Auditorio Fitness:\n";
+        
+        //ciclo for que arma el mensaje recorriendo todos los cupos con la función y los horarios
         for (int i = 0; i < horarios.length; i++) {
             int cuposRestantes = contarCupos(i);
             mensaje += (i + 1) + ". " + temas[i % temas.length] + " - " + horarios[i] + " (" + cuposRestantes + " cupos disponibles)\n";
@@ -99,12 +110,15 @@ public class Auditorio {
     private static void inscribirParticipanteAuditorio(int id) {
         String idParticipante = String.valueOf(id);//JOptionPane.showInputDialog("Ingrese su ID de participante:");
 
+        
+        //se arma el mensaje aregandole info a oppciones con el ciclo for 
         String opciones = "Seleccione la charla:\n";
         for (int i = 0; i < horarios.length; i++) {
             int cuposRestantes = contarCupos(i);
             opciones += (i + 1) + ". " + temas[i % temas.length] + " - " + horarios[i] + " (" + cuposRestantes + " cupos disponibles)\n";
         }
 
+        //aqui se verificar dependiendo de lo que se ingreso que responderle al usiario y llenar los arreglos de ser necesario
         try {
             int seleccion = Integer.parseInt(JOptionPane.showInputDialog(opciones)) - 1;
             if (seleccion >= 0 && seleccion < horarios.length) {
@@ -133,6 +147,7 @@ public class Auditorio {
             } else {
                 JOptionPane.showMessageDialog(null, "Selección no válida.");
             }
+            //al encontrar un error(id no valido) da este mensaje
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Entrada no válida.");
         }
@@ -145,6 +160,7 @@ public class Auditorio {
             mensaje += (i + 1) + ". " + temas[i % temas.length] + " - " + horarios[i] + "\n";
         }
 
+        //aqui se arman los mensajes y en caso de modificar la clase se hace el cambio en el arreglo correspondiente
         try {
             int seleccion = Integer.parseInt(JOptionPane.showInputDialog(mensaje)) - 1;
 
@@ -165,6 +181,7 @@ public class Auditorio {
         }
     }
 
+    //funcion con ciclo para hacer la suma de cuanta gente inscrita hay y hacer la resta al maximo de capacidad
     private static int contarCupos(int horarioIndex) {
         int inscritos = 0;
         for (String id : inscripciones[horarioIndex]) {

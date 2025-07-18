@@ -11,11 +11,15 @@ package introprogra_proyectofinal1.pkg0;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//atributos
 public class Usuario {
     private int id;
     private String nombre;
     private boolean activo;
 
+    
+    //arreglo de usuarios quemados simulando que el programa este pegado a una base de datos donde todos los usuarios estan
     public static final List<Usuario> listaUsuarios = new ArrayList<>();
 
     static {
@@ -71,12 +75,14 @@ public class Usuario {
         listaUsuarios.add(new Usuario(150, "Fiorella", true));
     }
 
+    //constructor
     public Usuario(int id, String nombre, boolean activo) {
         this.id = id;
         this.nombre = nombre;
         this.activo = activo;
     }
 
+    //setters&getters
     public int getId() {
         return id;
     }
@@ -93,6 +99,8 @@ public class Usuario {
         this.activo = activo;
     }
 
+    
+    //funcion para verificar el id que luego se utilizara en las diferentes clases para verificar el id antes de ingresar el usuario
     public static Usuario buscarPorId(int id) {
         for (Usuario u : listaUsuarios) {
             if (u.getId() == id) return u;

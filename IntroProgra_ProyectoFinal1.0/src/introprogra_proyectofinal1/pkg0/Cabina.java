@@ -37,12 +37,17 @@ public class Cabina {
                 "3. Cancelar reserva\n" +
                 "4. Salir");
             
-            if (opcion == null) break;
             
+            //detecta si el usuario canceló el cuadro de diálogo y termina el ciclo while para salir del menú.
+            if (opcion == null) break;
+
+            //opciones del menú
             switch (opcion) {
                 case "1":
                     mostrarDisponibilidad();
                     break;
+                    
+                    //verifica que el id sea real y este activo para inscribir
                 case "2":
                     Usuario uInC = seleccionarUsuarioCabina();
                     if (uInC != null && uInC.isActivo()) {
@@ -85,7 +90,7 @@ public class Cabina {
         }
     }
 
-    //métodos
+    //con un arreglo junta toda la info de los arreglos y y la junta al mensaje que se imprime
     private void mostrarDisponibilidad() {
         StringBuilder mensaje = new StringBuilder("HORARIOS (9:00 - 17:00)\nCabina\\Hora\t");
         for (String hora : horarios) mensaje.append(hora).append("\t");
@@ -101,8 +106,9 @@ public class Cabina {
         JOptionPane.showMessageDialog(null, mensaje.toString());
     }
 
+    // Da opciones para elegir cual cabina y su horario 
     private void reservarCabina(int id) {
-        int ids = id;//Integer.parseInt(JOptionPane.showInputDialog("Ingrese su ID de socio:"));
+        int ids = id;
 
         int cabina = Integer.parseInt(JOptionPane.showInputDialog(
             "Seleccione cabina:\n1. Cabina 1\n2. Cabina 2\n3. Cabina 3\n4. Cabina 4\n5. Cabina 5")) - 1;
@@ -118,6 +124,7 @@ public class Cabina {
         }
     }
 
+    // para cancelar la clase con el id verifica por todas las posiciones donde esta ese id para removerlo
     private void cancelarReserva(int id) {
         int ids = id;
         for (int i = 0; i < 5; i++) {
@@ -129,6 +136,7 @@ public class Cabina {
                 }
             }
         }
+        //al id no ser encontrado imprime este mensaje
         JOptionPane.showMessageDialog(null, "No se encontraron reservas para este ID");
     }
 
