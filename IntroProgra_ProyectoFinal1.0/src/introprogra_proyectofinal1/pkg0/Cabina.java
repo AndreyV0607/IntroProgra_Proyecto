@@ -4,6 +4,9 @@
  */
 package introprogra_proyectofinal1.pkg0;
 
+import java.awt.GridLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -139,6 +142,53 @@ public class Cabina {
         //al id no ser encontrado imprime este mensaje
         JOptionPane.showMessageDialog(null, "No se encontraron reservas para este ID");
     }
+   
+public void abrirInterfaz() {
+    // Crear ventana principal
+    JFrame frame = new JFrame("Gestión de Cabinas");
+    frame.setSize(400, 300);
+    frame.setLayout(new GridLayout(4, 1, 10, 10));
+
+    // Botones
+    JButton btnVer = new JButton("Ver Disponibilidad");
+    JButton btnReservar = new JButton("Reservar Cabina");
+    JButton btnCancelar = new JButton("Cancelar Reserva");
+    JButton btnCerrar = new JButton("Cerrar");
+
+    // Agregar botones a la ventana
+    frame.add(btnVer);
+    frame.add(btnReservar);
+    frame.add(btnCancelar);
+    frame.add(btnCerrar);
+
+    // === Eventos de los botones ===
+    btnVer.addActionListener(e -> mostrarDisponibilidad());
+
+    btnReservar.addActionListener(e -> {
+        Usuario uIn = seleccionarUsuarioCabina();
+        if (uIn != null && uIn.isActivo()) {
+            reservarCabina(uIn.getId());
+        } else {
+            JOptionPane.showMessageDialog(frame, "Usuario inválido o inactivo.");
+        }
+    });
+
+    btnCancelar.addActionListener(e -> {
+        Usuario uOut = seleccionarUsuarioCabina();
+        if (uOut != null && uOut.isActivo()) {
+            cancelarReserva(uOut.getId());
+        } else {
+            JOptionPane.showMessageDialog(frame, "Usuario inválido o inactivo.");
+        }
+    });
+
+    btnCerrar.addActionListener(e -> frame.dispose());
+
+    // Configuración de ventana
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+}
+
 
     
 }

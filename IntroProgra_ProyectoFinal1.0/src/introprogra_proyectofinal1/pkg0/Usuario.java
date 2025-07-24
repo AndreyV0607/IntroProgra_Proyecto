@@ -37,7 +37,7 @@ public class Usuario {
         listaUsuarios.add(new Usuario(112, "Lucía", true));
         listaUsuarios.add(new Usuario(113, "Daniel", true));
         listaUsuarios.add(new Usuario(114, "Camilo", true));
-        listaUsuarios.add(new Usuario(115, "David", true));
+        listaUsuarios.add(new Usuario(115, "David", false));
         listaUsuarios.add(new Usuario(116, "Laura", true));
         listaUsuarios.add(new Usuario(117, "Pedro", true));
         listaUsuarios.add(new Usuario(118, "Isabela", true));

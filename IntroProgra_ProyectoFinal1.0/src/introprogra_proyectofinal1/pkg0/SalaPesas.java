@@ -4,6 +4,7 @@
  */
 package introprogra_proyectofinal1.pkg0;
 
+import java.awt.GridLayout;
 import javax.swing.*;
 
 public class SalaPesas {
@@ -170,4 +171,51 @@ public class SalaPesas {
 
         JOptionPane.showMessageDialog(null, mensaje.toString());
     }
+    
+public void abrirInterfaz() {
+    // Crear ventana principal
+    JFrame frame = new JFrame("Gestión de Sala de Pesas");
+    frame.setSize(400, 300);
+    frame.setLayout(new GridLayout(4, 1, 10, 10));
+
+    // Botones
+    JButton btnIngresar = new JButton("Ingresar a un horario");
+    JButton btnSalir = new JButton("Salir de un horario");
+    JButton btnVer = new JButton("Ver presentes");
+    JButton btnCerrar = new JButton("Cerrar");
+
+    // Agregar botones al frame
+    frame.add(btnIngresar);
+    frame.add(btnSalir);
+    frame.add(btnVer);
+    frame.add(btnCerrar);
+
+    // === Eventos de los botones ===
+    btnIngresar.addActionListener(e -> {
+        Usuario uIn = seleccionarUsuarioSalaPesas();
+        if (uIn != null && uIn.isActivo()) {
+            ingresarSalaPesas(uIn.getId());
+        } else {
+            JOptionPane.showMessageDialog(frame, "Usuario inválido o inactivo.");
+        }
+    });
+
+    btnSalir.addActionListener(e -> {
+        Usuario uOut = seleccionarUsuarioSalaPesas();
+        if (uOut != null) {
+            salirSalaPesas(uOut.getId());
+        } else {
+            JOptionPane.showMessageDialog(frame, "Usuario no encontrado.");
+        }
+    });
+
+    btnVer.addActionListener(e -> mostrarPresentesSalaPesas());
+
+    btnCerrar.addActionListener(e -> frame.dispose());
+
+    // Configuración de la ventana
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+}
+
 }

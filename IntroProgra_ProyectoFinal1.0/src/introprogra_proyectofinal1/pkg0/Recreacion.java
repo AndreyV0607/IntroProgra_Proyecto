@@ -4,6 +4,9 @@
  */
 package introprogra_proyectofinal1.pkg0;
 
+import java.awt.GridLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -239,4 +242,73 @@ public class Recreacion {
 
         JOptionPane.showMessageDialog(null, estado);
     }
+
+public void abrirInterfaz() {
+    // Crear ventana
+    JFrame frame = new JFrame("Área de Recreación");
+    frame.setSize(400, 400);
+    frame.setLayout(new GridLayout(6, 1, 10, 10));
+
+    // Botones
+    JButton btnFutbol = new JButton("Reservar Fútbol");
+    JButton btnBasket = new JButton("Reservar Baloncesto");
+    JButton btnTenis = new JButton("Reservar Tenis");
+    JButton btnLiberar = new JButton("Liberar Cancha");
+    JButton btnEstado = new JButton("Ver Estado Actual");
+    JButton btnCerrar = new JButton("Cerrar");
+
+    // Agregar botones
+    frame.add(btnFutbol);
+    frame.add(btnBasket);
+    frame.add(btnTenis);
+    frame.add(btnLiberar);
+    frame.add(btnEstado);
+    frame.add(btnCerrar);
+
+    // === Eventos ===
+    btnFutbol.addActionListener(e -> {
+        Usuario u = seleccionarUsuarioRecreacion();
+        if (u != null && u.isActivo()) {
+            reservarFutbol(u.getId());
+        } else {
+            JOptionPane.showMessageDialog(frame, "Usuario inválido o inactivo.");
+        }
+    });
+
+    btnBasket.addActionListener(e -> {
+        Usuario u = seleccionarUsuarioRecreacion();
+        if (u != null && u.isActivo()) {
+            reservarBaloncesto(u.getId());
+        } else {
+            JOptionPane.showMessageDialog(frame, "Usuario inválido o inactivo.");
+        }
+    });
+
+    btnTenis.addActionListener(e -> {
+        Usuario u = seleccionarUsuarioRecreacion();
+        if (u != null && u.isActivo()) {
+            reservarTenis(u.getId());
+        } else {
+            JOptionPane.showMessageDialog(frame, "Usuario inválido o inactivo.");
+        }
+    });
+
+    btnLiberar.addActionListener(e -> {
+        Usuario u = seleccionarUsuarioRecreacion();
+        if (u != null) {
+            liberarCancha(u.getId());
+        } else {
+            JOptionPane.showMessageDialog(frame, "Usuario no encontrado.");
+        }
+    });
+
+    btnEstado.addActionListener(e -> mostrarEstadoRecreacion());
+
+    btnCerrar.addActionListener(e -> frame.dispose());
+
+    // Configurar ventana
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+}
+
 }

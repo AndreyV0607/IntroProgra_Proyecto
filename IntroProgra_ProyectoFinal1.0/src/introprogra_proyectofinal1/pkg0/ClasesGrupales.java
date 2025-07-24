@@ -4,6 +4,9 @@
  */
 package introprogra_proyectofinal1.pkg0;
 
+import java.awt.GridLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -167,6 +170,153 @@ public class ClasesGrupales {
             }
         }
     }
+
+
+public void abrirInterfaz() {
+    // === VARIABLES LOCALES ===
+    String[] clases = {"Yoga", "Crossfit", "Funcional", "Pilates", "Zumba", "Spinning"};
+    int[] cuposDisponibles = {50, 50, 50, 50, 50, 50};
+    String[][] inscripciones = new String[6][50];
+    String[] horarios = {"8:00 AM", "10:00 AM", "12:00 PM", "2:00 PM", "4:00 PM", "6:00 PM"};
+    String[] horariosDisponibles = {"8:00 AM", "10:00 AM", "12:00 PM", "2:00 PM", "4:00 PM", "6:00 PM"};
+
+    // === CREAR VENTANA ===
+    JFrame frame = new JFrame("Gestión de Clases Grupales");
+    frame.setSize(400, 300);
+    frame.setLayout(new GridLayout(4, 1, 10, 10));
+
+    // Botones
+    JButton btnVer = new JButton("Ver Clases y Cupos");
+    JButton btnReservar = new JButton("Reservar Clase");
+    JButton btnModificar = new JButton("Modificar Clase");
+    JButton btnCerrar = new JButton("Cerrar");
+
+    frame.add(btnVer);
+    frame.add(btnReservar);
+    frame.add(btnModificar);
+    frame.add(btnCerrar);
+
+    // === Eventos ===
+
+    // Ver clases
+    btnVer.addActionListener(e -> {
+        StringBuilder mensaje = new StringBuilder("Cupos disponibles:\n");
+        for (int i = 0; i < clases.length; i++) {
+            mensaje.append((i + 1)).append(". ").append(clases[i])
+                   .append(" - ").append(horarios[i])
+                   .append(": ").append(cuposDisponibles[i]).append(" cupos\n");
+        }
+        JOptionPane.showMessageDialog(frame, mensaje.toString());
+    });
+
+    // Reservar clase
+    btnReservar.addActionListener(e -> {
+        String idSocio = JOptionPane.showInputDialog("Ingrese su ID de socio:");
+        if (idSocio == null) return;
+
+        // Mostrar menú de clases
+        StringBuilder claseTexto = new StringBuilder("Seleccione clase:\n");
+        for (int i = 0; i < clases.length; i++) {
+            claseTexto.append((i + 1)).append(". ").append(clases[i])
+                      .append(" (").append(horarios[i])
+                      .append(") - ").append(cuposDisponibles[i]).append(" cupos\n");
+        }
+
+        try {
+            int claseSeleccionada = Integer.parseInt(JOptionPane.showInputDialog(claseTexto.toString())) - 1;
+
+            if (claseSeleccionada >= 0 && claseSeleccionada < clases.length) {
+                if (cuposDisponibles[claseSeleccionada] == 0) {
+                    JOptionPane.showMessageDialog(frame, "Lo sentimos, no hay cupos en esa clase.");
+                } else {
+                    boolean yaRegistrado = false;
+                    for (int j = 0; j < 50; j++) {
+                        if (idSocio.equals(inscripciones[claseSeleccionada][j])) {
+                            yaRegistrado = true;
+                            break;
+                        }
+                    }
+                    if (yaRegistrado) {
+                        JOptionPane.showMessageDialog(frame, "Ya estás registrado en esta clase.");
+                    } else {
+                        for (int j = 0; j < 50; j++) {
+                            if (inscripciones[claseSeleccionada][j] == null) {
+                                inscripciones[claseSeleccionada][j] = idSocio;
+                                cuposDisponibles[claseSeleccionada]--;
+                                JOptionPane.showMessageDialog(frame, "Reserva exitosa en " + clases[claseSeleccionada]);
+                                break;
+                            }
+                        }
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(frame, "Clase no válida.");
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(frame, "Entrada inválida.");
+        }
+    });
+
+    // Modificar clase
+    btnModificar.addActionListener(e -> {
+        StringBuilder menuModificar = new StringBuilder("Seleccione la clase que desea modificar:\n");
+        for (int i = 0; i < clases.length; i++) {
+            menuModificar.append((i + 1)).append(". ").append(clases[i])
+                         .append(" (").append(horarios[i])
+                         .append(") - ").append(cuposDisponibles[i]).append(" cupos\n");
+        }
+        try {
+            int indiceModificar = Integer.parseInt(JOptionPane.showInputDialog(menuModificar.toString())) - 1;
+
+            if (indiceModificar >= 0 && indiceModificar < clases.length) {
+                String nuevoNombre = JOptionPane.showInputDialog("Nuevo nombre para la clase (actual: " + clases[indiceModificar] + "):");
+                if (nuevoNombre != null && !nuevoNombre.trim().isEmpty()) {
+                    clases[indiceModificar] = nuevoNombre;
+                }
+
+                StringBuilder opcionesHorarios = new StringBuilder("Seleccione nuevo horario:\n");
+                for (int i = 0; i < horariosDisponibles.length; i++) {
+                    opcionesHorarios.append((i + 1)).append(". ").append(horariosDisponibles[i]).append("\n");
+                }
+
+                int horarioSeleccionado = Integer.parseInt(JOptionPane.showInputDialog(opcionesHorarios.toString())) - 1;
+                if (horarioSeleccionado >= 0 && horarioSeleccionado < horariosDisponibles.length) {
+                    horarios[indiceModificar] = horariosDisponibles[horarioSeleccionado];
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Horario no válido. Se mantiene el actual.");
+                }
+
+                int reservados = 0;
+                for (int j = 0; j < 50; j++) {
+                    if (inscripciones[indiceModificar][j] != null) reservados++;
+                }
+
+                String nuevoCupoStr = JOptionPane.showInputDialog("Cupos máximos (actuales: " + (reservados + cuposDisponibles[indiceModificar]) + "). Debe ser mayor o igual a reservados (" + reservados + "):");
+                if (nuevoCupoStr != null) {
+                    int nuevoCupo = Integer.parseInt(nuevoCupoStr);
+                    if (nuevoCupo >= reservados && nuevoCupo <= 50) {
+                        cuposDisponibles[indiceModificar] = nuevoCupo - reservados;
+                        JOptionPane.showMessageDialog(frame, "Clase modificada correctamente.");
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Valor inválido. Debe ser entre " + reservados + " y 50.");
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(frame, "Selección inválida.");
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(frame, "Entrada inválida.");
+        }
+    });
+
+    // Cerrar
+    btnCerrar.addActionListener(e -> frame.dispose());
+
+    // Configuración de ventana
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+}
+
     
 }
 

@@ -4,6 +4,9 @@
  */
 package introprogra_proyectofinal1.pkg0;
 
+import java.awt.GridLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -197,4 +200,49 @@ public class Parqueo {
         }
         return sb.toString();
     }
+    public void abrirInterfaz() {
+    // Crear ventana
+    JFrame frame = new JFrame("Gestión de Parqueo");
+    frame.setSize(400, 300);
+    frame.setLayout(new GridLayout(4, 1, 10, 10));
+
+    // Botones
+    JButton btnVer = new JButton("Ver Parqueo");
+    JButton btnReservar = new JButton("Reservar Espacio");
+    JButton btnLiberar = new JButton("Liberar Espacio");
+    JButton btnCerrar = new JButton("Cerrar");
+
+    // Agregar botones a la ventana
+    frame.add(btnVer);
+    frame.add(btnReservar);
+    frame.add(btnLiberar);
+    frame.add(btnCerrar);
+
+    // === Eventos de los botones ===
+    btnVer.addActionListener(e -> mostrarParqueo());
+
+    btnReservar.addActionListener(e -> {
+        Usuario uIn = seleccionarUsuarioParqueo();
+        if (uIn != null && uIn.isActivo()) {
+            asignarEspacioParqueo(uIn.getId());
+        } else {
+            JOptionPane.showMessageDialog(frame, "Usuario inválido o inactivo.");
+        }
+    });
+
+    btnLiberar.addActionListener(e -> {
+        Usuario uOut = seleccionarUsuarioParqueo();
+        if (uOut != null && uOut.isActivo()) {
+            liberarEspacioParqueo(uOut.getId());
+        } else {
+            JOptionPane.showMessageDialog(frame, "Usuario inválido o inactivo.");
+        }
+    });
+
+    btnCerrar.addActionListener(e -> frame.dispose());
+
+    // Configuración de ventana
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+}
 }

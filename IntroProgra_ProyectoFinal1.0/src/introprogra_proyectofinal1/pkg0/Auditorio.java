@@ -4,6 +4,9 @@
  */
 package introprogra_proyectofinal1.pkg0;
 
+import java.awt.GridLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -189,5 +192,47 @@ public class Auditorio {
         }
         return 30 - inscritos;
     }
+    
+
+public void abrirInterfaz() {
+    // Crear ventana principal
+    JFrame frame = new JFrame("Gestión del Auditorio");
+    frame.setSize(400, 300);
+    frame.setLayout(new GridLayout(4, 1, 10, 10));
+
+    // Botones
+    JButton btnVerCharlas = new JButton("Ver Charlas Disponibles");
+    JButton btnInscribirse = new JButton("Inscribirse a una Charla");
+    JButton btnModificar = new JButton("Modificar Charla");
+    JButton btnCerrar = new JButton("Cerrar");
+
+    // Agregar botones a la ventana
+    frame.add(btnVerCharlas);
+    frame.add(btnInscribirse);
+    frame.add(btnModificar);
+    frame.add(btnCerrar);
+
+    // === Eventos de los botones ===
+    btnVerCharlas.addActionListener(e -> mostrarCharlas());
+
+    btnInscribirse.addActionListener(e -> {
+        Usuario uInA = seleccionarUsuarioAuditorio();
+        if (uInA != null && uInA.isActivo()) {
+            inscribirParticipanteAuditorio(uInA.getId());
+        } else {
+            JOptionPane.showMessageDialog(frame, "Usuario inválido o inactivo.");
+        }
+    });
+
+    btnModificar.addActionListener(e -> modificarNombreCharla());
+
+    btnCerrar.addActionListener(e -> frame.dispose());
+
+    // Configuración de la ventana
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+}
+
+    
 }
 
